@@ -4,29 +4,16 @@ import '../styles/ShoppingList.css'
 //import {v4 as uuid4} from 'uuid'
 import PlantItem from './PlantItem'
 import Categories from './Categories'
+import { useCartContext } from '../App'
 
-export default function ShoppingList({cart, updateCart}) {
+export default function ShoppingList() {
+	const { update } = useCartContext();
 	const [activeCategory, setActiveCategory] = useState('')
 	const categories = plantList.reduce(
 		(acc, plant) =>
 			acc.includes(plant.category) ? acc : acc.concat(plant.category),
 		[]
 	)
-
-	function addToCart(name, price) {
-		const currentPlantSaved = cart.find((plant) => plant.name === name)
-		if (currentPlantSaved) {
-			const cartFilteredCurrentPlant = cart.filter(
-				(plant) => plant.name !== name
-			)
-			updateCart([
-				...cartFilteredCurrentPlant,
-				{ name, price, amount: currentPlantSaved.amount + 1 }
-			])
-		} else {
-			updateCart([...cart, { name, price, amount: 1 }])
-		}
-	}
 
 	return (
 		<div className='lmj-shopping-list'>
@@ -47,7 +34,7 @@ export default function ShoppingList({cart, updateCart}) {
 								light={light}
 								price={price}
 							/>
-							<button onClick={() => addToCart(name, price)}>Ajouter</button>
+							<button onClick={() => update(id, name, price)}>Ajouter</button>
 						</div>
 					) : null
 				)}

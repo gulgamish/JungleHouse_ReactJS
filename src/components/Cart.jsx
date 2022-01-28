@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react'
+import { useCartContext } from '../App'
 import "../styles/Cart.css"
 
-export default function Cart({cart, updateCart}) {
-
+export default function Cart() {
+	const { cart, total, reset } = useCartContext();
     const [isOpen, setIsOpen] = useState(true)
-	const total = cart.reduce(
-		(acc, plantType) => acc + plantType.amount * plantType.price,
-		0
-	)
+
 	useEffect(() => {
 		document.title = `LMJ: ${total}€ d'achats`
 	}, [total])
@@ -31,7 +29,7 @@ export default function Cart({cart, updateCart}) {
 						))}
 					</ul>
 					<h3>Total :{total}€</h3>
-					<button onClick={() => updateCart([])}>Vider le panier</button>
+					<button onClick={() => reset()}>Vider le panier</button>
 				</div>
 			) : (
 				<div>Votre panier est vide</div>

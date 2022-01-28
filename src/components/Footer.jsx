@@ -4,8 +4,7 @@ import '../styles/Footer.css'
 
 
 export default function Footer() {
-
-    const [inputValue, setInputValue] = useState('')
+	const [inputValue, setInputValue] = useState('')
 
 	function handleInput(e) {
 		setInputValue(e.target.value)
